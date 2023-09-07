@@ -1,0 +1,49 @@
+name: Linux.Events.NewRPMs
+
+description: |
+  This artifact collects new/updated RPMs.
+
+precondition: SELECT OS From info() where OS = 'linux'
+
+type: CLIENT_EVENT
+
+parameters:
+  - name: period
+    type: int
+    description: Number of seconds between checks for new RPMs.
+    default: 60
+
+sources:
+  - query: |
+
+      LET rpm_file_rules = (
+        "-w /var/lib/rpm/Packages -p w -k vrr_rpm_packages",
+        "-w /var/lib/rpm/Packages.db -p w -k vrr_rpm_packages_db")
+
+      LET audit_query = SELECT *
+        FROM audit(rules=rpm_file_rules)
+        WHERE "vrr_rpm_packages" in Tags OR "vrr_rpm_packages_db" in Tags
+
+      -- The rpm program can update the file multiple times when installing an rpm.
+      -- Therefore we dedup to one event within a period.
+      LET deduped = SELECT * FROM foreach(
+        row={
+          SELECT * FROM clock(start=0, period=period)
+        },
+        query={
+          SELECT * FROM fifo(
+            query=audit_query,
+            max_rows=1,
+            flush=TRUE)
+        })
+
+      SELECT * FROM foreach(
+        row={
+          SELECT * FROM deduped
+        },
+        query={
+          SELECT Name, Version, Release, InstallTime, PublicKey
+          FROM rpm()
+          WHERE InstallTime > timestamp(epoch=now() - period)
+        })
+
