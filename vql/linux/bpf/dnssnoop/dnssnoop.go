@@ -1,10 +1,11 @@
-// +build linux
+//go:build linux
 
 package bpf
 
 import (
 	"context"
 	_ "embed"
+	"errors"
 	"os"
 	"time"
 
@@ -144,35 +145,58 @@ func (self DnssnoopPlugin) Call(
 
 		f := os.NewFile(uintptr(sockFd), "")
 		if f == nil {
-			scope.Log("Error opening file to socket descriptor")
+			scope.Log("dnssnoop: error opening file from socket descriptor")
 			return
 		}
 		defer f.Close()
 
-		received_data := make([]byte, 1500)
+		ch := make(chan []byte)
+		go func() {
+			defer close(ch)
+
+			data := make([]byte, 1500)
+			for {
+				select {
+				case <-ctx.Done():
+					return
+				default:
+				}
+
+				_, err := f.Read(data)
+				if err != nil && !errors.Is(err, os.ErrClosed) {
+					scope.Log("dnssnoop: error reading from socket: %v", err)
+					return
+				}
+				ch <- data
+			}
+		}()
 
 		for {
-			_, err := f.Read(received_data)
-			if err != nil {
-				scope.Log("Error reading from socket: %v", err)
+			select {
+			case <-ctx.Done():
+				for _ = range ch {} // drain channel
 				return
-			}
+			case received_data, ok := <- ch:
+				if !ok {
+					return
+				}
 
-			packet := try_parse_packet(received_data)
-			if packet == nil {
-				continue
-			}
+				packet := try_parse_packet(received_data)
+				if packet == nil {
+					continue
+				}
 
-			// skip duplicate replies from local resolver
-			if isLocalPacket(packet) {
-				continue
-			}
+				// skip duplicate replies from local resolver
+				if isLocalPacket(packet) {
+					continue
+				}
 
-			if dnsLayer := packet.Layer(layers.LayerTypeDNS); dnsLayer != nil {
-				dns, _ := dnsLayer.(*layers.DNS)
+				if dnsLayer := packet.Layer(layers.LayerTypeDNS); dnsLayer != nil {
+					dns, _ := dnsLayer.(*layers.DNS)
 
-				if dns.ANCount > 0 {
-					processAnswers(dns.Answers, output_chan)
+					if dns.ANCount > 0 {
+						processAnswers(dns.Answers, output_chan)
+					}
 				}
 			}
 		}

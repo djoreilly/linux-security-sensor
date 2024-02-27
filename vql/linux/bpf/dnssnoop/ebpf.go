@@ -1,4 +1,4 @@
-// +build linux
+//go:build linux
 
 package bpf
 
@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"syscall"
 
-	"golang.org/x/sys/unix"
 	libbpf "github.com/aquasecurity/libbpfgo"
+	"golang.org/x/sys/unix"
 	"www.velocidex.com/golang/velociraptor/vql/linux/bpf"
 )
 

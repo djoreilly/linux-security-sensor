@@ -1,4 +1,4 @@
-// +build linux
+//go:build linux
 
 package bpf
 
@@ -69,48 +69,57 @@ func (self TcpsnoopPlugin) Call(
 			scope.Log("tcpsnoop: %s", err)
 			return
 		}
+		defer perfBuffer.Close()
 
 		perfBuffer.Start()
+		defer perfBuffer.Stop()
 
-		for data := range eventsChan {
-			var event TcpsnoopEvent
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case data, ok := <-eventsChan:
+			    if !ok {
+				    scope.Log("tcpsnoop: events channel was closed")
+				    return
+			    }
+				var event TcpsnoopEvent
 
-			// Parses raw event from the ebpf map
-			err := binary.Read(bytes.NewBuffer(data), binary.LittleEndian, &event)
+				// Parses raw event from the ebpf map
+				err := binary.Read(bytes.NewBuffer(data), binary.LittleEndian, &event)
+				if err != nil {
+					scope.Log("tcpsnoop: failed to decode received data: %s", err)
+					continue
+				}
 
-			// Now we make into a more userfriendly struct for sending to VRR
-			event2 := Event{
-				Timestamp:  time.Now().UTC().Format("2006-01-02 15:04:05"),
-				LocalPort:  event.Lport,
-				RemotePort: event.Rport,
-				Uid:        event.Uid,
-				Pid:        event.Pid,
-				Task:       string(bytes.Trim(event.Task[:], "\000")),
+				// Now we make into a more userfriendly struct for sending to VRR
+				event2 := Event{
+					Timestamp:  time.Now().UTC().Format("2006-01-02 15:04:05"),
+					LocalPort:  event.Lport,
+					RemotePort: event.Rport,
+					Uid:        event.Uid,
+					Pid:        event.Pid,
+					Task:       string(bytes.Trim(event.Task[:], "\000")),
+				}
+
+				if event.Af == AF_INET {
+					event2.Af = "IPv4"
+					event2.RemoteAddr = net.IP.String(event.Saddr[:4])
+					event2.LocalAddr = net.IP.String(event.Daddr[:4])
+				} else {
+					event2.RemoteAddr = net.IP.String(event.Saddr[:])
+					event2.LocalAddr = net.IP.String(event.Daddr[:])
+					event2.Af = "IPv6"
+				}
+
+				if event.Dir == OUT_CON {
+					event2.Dir = "OUTGOING"
+				} else {
+					event2.Dir = "INCOMING"
+				}
+
+				output_chan <- event2
 			}
-
-			if event.Af == AF_INET {
-				event2.Af = "IPv4"
-				event2.RemoteAddr = net.IP.String(event.Saddr[:4])
-				event2.LocalAddr = net.IP.String(event.Daddr[:4])
-			} else {
-				event2.RemoteAddr = net.IP.String(event.Saddr[:])
-				event2.LocalAddr = net.IP.String(event.Daddr[:])
-				event2.Af = "IPv6"
-			}
-
-			if event.Dir == OUT_CON {
-				event2.Dir = "OUTGOING"
-			} else {
-				event2.Dir = "INCOMING"
-			}
-
-			if err != nil {
-				scope.Log("failed to decode received data: %s\n", err)
-				continue
-			}
-
-			// print the tcp event to VRR's channel
-			output_chan <- event2
 		}
 	}()
 
