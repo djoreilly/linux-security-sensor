@@ -59,7 +59,7 @@ func (self TcpsnoopPlugin) Call(
 			scope.Log("tcpsnoop: %s", err)
 			return
 		}
-		defer bpf.Close()
+		defer closeModule(bpf)
 
 		eventsChan := make(chan []byte)
 		lostChan := make(chan uint64)

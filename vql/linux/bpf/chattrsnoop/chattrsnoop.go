@@ -67,7 +67,7 @@ func (self ChattrsnoopPlugin) Call(
 			return
 		}
 
-		defer bpfModule.Close()
+		defer closeModule(bpfModule)
 
 		eventsChan := make(chan []byte)
 		lostChan := make(chan uint64)

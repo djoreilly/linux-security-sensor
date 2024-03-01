@@ -1,4 +1,4 @@
-// +build linux
+//go:build linux
 
 package bpf
 
@@ -6,7 +6,7 @@ import (
 	_ "embed"
 
 	libbpf "github.com/aquasecurity/libbpfgo"
-        "www.velocidex.com/golang/velociraptor/vql/linux/bpf"
+	"www.velocidex.com/golang/velociraptor/vql/linux/bpf"
 )
 
 //go:generate make -C .. ${PWD}/chattrsnoop.bpf.o
@@ -20,9 +20,13 @@ func initBpf() (*libbpf.Module, error) {
 	}
 
 	if err = bpf.AttachKprobe(bpfModule, "trace_vfs_ioctl", "do_vfs_ioctl"); err != nil {
-		bpfModule.Close()
+		bpf.CloseModule(bpfModule)
 		return nil, err
 	}
 
 	return bpfModule, nil
+}
+
+func closeModule(module *libbpf.Module) {
+	bpf.CloseModule(module)
 }

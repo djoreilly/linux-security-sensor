@@ -140,7 +140,7 @@ func (self DnssnoopPlugin) Call(
 			return
 		}
 
-		defer bpf.Close()
+		defer closeModule(bpf)
 		defer unix.Close(sockFd)
 
 		f := os.NewFile(uintptr(sockFd), "")

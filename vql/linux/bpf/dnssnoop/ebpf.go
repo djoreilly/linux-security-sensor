@@ -42,15 +42,19 @@ func initBpf() (*libbpf.Module, int, error) {
 
 	prog, _ := bpfModule.GetProgram("socket_filter")
 	if prog == nil {
-		bpfModule.Close()
+		bpf.CloseModule(bpfModule)
 		return nil, -1, fmt.Errorf("Couldn't find dnssnoop bpf program")
 	}
 
 	fd, err := initSocket(prog.GetFd())
 	if err != nil {
-		bpfModule.Close()
+		bpf.CloseModule(bpfModule)
 		return nil, -1, err
 	}
 
 	return bpfModule, fd, nil
+}
+
+func closeModule(module *libbpf.Module) {
+	bpf.CloseModule(module)
 }

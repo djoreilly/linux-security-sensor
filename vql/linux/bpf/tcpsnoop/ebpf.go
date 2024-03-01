@@ -1,4 +1,4 @@
-// +build linux
+//go:build linux
 
 package bpf
 
@@ -6,7 +6,7 @@ import (
 	_ "embed"
 
 	libbpf "github.com/aquasecurity/libbpfgo"
-        "www.velocidex.com/golang/velociraptor/vql/linux/bpf"
+	"www.velocidex.com/golang/velociraptor/vql/linux/bpf"
 )
 
 //go:generate make -C .. ${PWD}/tcpsnoop.bpf.o
@@ -39,19 +39,23 @@ func initBpf() (*libbpf.Module, error) {
 	}
 
 	if err = bpf.AttachKretprobe(bpfModule, "inet_csk_accept_retprobe", "inet_csk_accept"); err != nil {
-		bpfModule.Close()
+		bpf.CloseModule(bpfModule)
 		return nil, err
 	}
 
 	if err = bpf.AttachKretprobe(bpfModule, "tcp_v4_connect_ret", "tcp_v4_connect"); err != nil {
-		bpfModule.Close()
+		bpf.CloseModule(bpfModule)
 		return nil, err
 	}
 
 	if err = bpf.AttachKprobe(bpfModule, "tcp_v4_connect", "tcp_v4_connect"); err != nil {
-		bpfModule.Close()
+		bpf.CloseModule(bpfModule)
 		return nil, err
 	}
 
 	return bpfModule, nil
+}
+
+func closeModule(module *libbpf.Module) {
+	bpf.CloseModule(module)
 }

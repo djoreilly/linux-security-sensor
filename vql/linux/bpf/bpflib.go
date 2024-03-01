@@ -1,16 +1,24 @@
-// +build linux
+//go:build linux
 
 package bpf
 
 import (
 	"fmt"
 	"os"
+	"sync"
 
 	libbpf "github.com/aquasecurity/libbpfgo"
 	"github.com/aquasecurity/libbpfgo/helpers"
 )
 
+var (
+	mu = &sync.Mutex{}
+)
+
 func LoadBpfModule(name string, bpfCode []byte) (*libbpf.Module, error) {
+	mu.Lock()
+	defer mu.Unlock()
+
 	var bpfModule *libbpf.Module
 	var err error
 
@@ -42,6 +50,12 @@ func LoadBpfModule(name string, bpfCode []byte) (*libbpf.Module, error) {
 	}
 
 	return bpfModule, nil
+}
+
+func CloseModule(module *libbpf.Module) {
+	mu.Lock()
+	defer mu.Unlock()
+	module.Close()
 }
 
 func AttachKprobe(bpfModule *libbpf.Module, progName string, attachFunc string) error {
