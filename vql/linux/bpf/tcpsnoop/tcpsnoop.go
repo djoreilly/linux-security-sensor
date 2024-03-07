@@ -7,6 +7,7 @@ import (
 	"context"
 	"encoding/binary"
 	"net"
+	"sync"
 	"time"
 
 	"github.com/Velocidex/ordereddict"
@@ -15,6 +16,8 @@ import (
 	vql_subsystem "www.velocidex.com/golang/velociraptor/vql"
 	"www.velocidex.com/golang/vfilter"
 )
+
+var mu sync.Mutex
 
 type TcpsnoopPlugin struct{}
 
@@ -45,6 +48,9 @@ func (self TcpsnoopPlugin) Call(
 	output_chan := make(chan vfilter.Row)
 
 	go func() {
+		mu.Lock()
+		defer mu.Unlock()
+
 		defer close(output_chan)
 
 		err := vql_subsystem.CheckAccess(scope, acls.MACHINE_STATE)
