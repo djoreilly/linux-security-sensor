@@ -119,7 +119,7 @@ type auditService struct {
 	unsubscribeChannel    chan *subscriber
 	shutdownChan          chan struct{}
 
-	rawBufPool sync.Pool
+	rawBufPool *sync.Pool
 
 	// Used only for stats reporting
 	totalMessagesReceivedCounter   AtomicCounter
@@ -164,10 +164,10 @@ func (self *auditBuf) Put() {
 
 func newAuditService(config_obj *config_proto.Config, logger *logging.LogContext, listener auditListener, client commandClient) *auditService {
 	bufSize := unix.NLMSG_HDRLEN + libaudit.AuditMessageMaxLength
-	rawBufPool := sync.Pool{}
+	rawBufPool := &sync.Pool{}
 
 	rawBufPool.New = func() any {
-		return newAuditBuf(bufSize, &rawBufPool)
+		return newAuditBuf(bufSize, rawBufPool)
 	}
 
 	return &auditService{
