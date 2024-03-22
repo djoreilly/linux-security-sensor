@@ -135,7 +135,7 @@ type auditService struct {
 type auditBuf struct {
 	data     []byte
 	size     int
-	refcount utils.Refcount
+	refcount *utils.Refcount
 	pool     *sync.Pool
 }
 
