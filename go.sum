@@ -252,6 +252,8 @@ github.com/dimchansky/utfbom v1.1.1 h1:vV6w1AhK4VMnhBno/TPVCoK9U/LP0PkLCS9tbxHdi
 github.com/dimchansky/utfbom v1.1.1/go.mod h1:SxdoEBH5qIqFocHMyGOXVAybYJdr71b1Q/j0mACtrfE=
 github.com/djoreilly/go-libaudit/v2 v2.0.0-20240930120146-860ca41845bd h1:JtgANE0pYw+DxwN1QYqTEoeThw/k/7ZoVttzxVtdbmU=
 github.com/djoreilly/go-libaudit/v2 v2.0.0-20240930120146-860ca41845bd/go.mod h1:hfXkl/6sTI+fRPzNHNSJ2aLZBZqom9IMBjfmDXbg9E8=
+github.com/djoreilly/go-rpmdb v0.0.0-20241106150710-2e9b5a9aee34 h1:S5+WizbPlMRYXHDCP9TSd+OzuGDAPD/S0JSl4HidJz4=
+github.com/djoreilly/go-rpmdb v0.0.0-20241106150710-2e9b5a9aee34/go.mod h1:nwpkQwtY9cRpoGyfNeArgYq+JAPFrTW947qOL1pnA/k=
 github.com/dlclark/regexp2 v1.2.0/go.mod h1:2pZnwuY/m+8K6iRw6wQdMtk+rH5tNGR1i55kozfMjCc=
 github.com/dlclark/regexp2 v1.7.0 h1:7lJfhqlPssTb1WQx4yvTHN0uElPEv52sbaECrAQxjAo=
 github.com/dlclark/regexp2 v1.7.0/go.mod h1:DHkYz0B9wPfa6wondMfaivmHpzrQ3v9q8cnmRbL6yW8=
@@ -482,8 +484,6 @@ github.com/jcmturner/gokrb5/v8 v8.4.4 h1:x1Sv4HaTpepFkXbt2IkL29DXRf8sOfZXo8eRKh6
 github.com/jcmturner/gokrb5/v8 v8.4.4/go.mod h1:1btQEpgT6k+unzCwX1KdWMEwPPkkgBtP+F6aCACiMrs=
 github.com/jcmturner/rpc/v2 v2.0.3 h1:7FXXj8Ti1IaVFpSAziCZWNzbNuZmnvw/i6CqLNdWfZY=
 github.com/jcmturner/rpc/v2 v2.0.3/go.mod h1:VUJYCIDm3PVOEHw8sgt091/20OJjskO/YJki3ELg/Hc=
-github.com/jeffmahoney/go-rpmdb v0.0.0-20221206190147-d916ed974102 h1:xqflzs5dvq19kY9uWsusWMuEcR9sh8Mt4lbsS21Fb5Q=
-github.com/jeffmahoney/go-rpmdb v0.0.0-20221206190147-d916ed974102/go.mod h1:eVDe/r6WqX8gq4pJ0wp9nlKL5mMKXzl3A7ryGN8DNmI=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
 github.com/jmespath/go-jmespath v0.4.0 h1:BEgLn5cpjn8UN1mAw4NjwDrS35OdebyEtFe+9YPoQUg=
 github.com/jmespath/go-jmespath v0.4.0/go.mod h1:T8mJZnbsbmF+m6zOOFylbeCJqk5+pHWvzYPziyZiYoo=
@@ -507,8 +507,6 @@ github.com/klauspost/compress v1.17.8 h1:YcnTYrq7MikUT7k0Yb5eceMmALQPYBW/Xltxn0N
 github.com/klauspost/compress v1.17.8/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
 github.com/klauspost/pgzip v1.2.5 h1:qnWYvvKqedOF2ulHpMG72XQol4ILEJ8k2wwRl/Km8oE=
 github.com/klauspost/pgzip v1.2.5/go.mod h1:Ch1tH69qFZu15pkjo5kYi6mth2Zzwzt50oCQKQE9RUs=
-github.com/knqyf263/go-rpmdb v0.0.0-20221030135625-4082a22221ce h1:/w0hAcauo/FBVaBvNMQdPZgKjTu5Ip3jvGIM1+VUE7o=
-github.com/knqyf263/go-rpmdb v0.0.0-20221030135625-4082a22221ce/go.mod h1:zp6SMcRd0GB+uwNJjr+DkrNZdQZ4er2HMO6KyD0vIGU=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/fs v0.1.0 h1:Jskdu9ieNAYnjxsi0LbQp1ulIKZV1LAFgK1tWhpZgl8=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
