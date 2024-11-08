@@ -76,6 +76,15 @@ func (self *realCommandClient) SetEnabled(enabled bool, wm libaudit.WaitMode) er
 	return self.client.SetEnabled(enabled, wm)
 }
 
+func (self *realCommandClient) SetRateLimit(perSecondLimit uint32, wm libaudit.WaitMode) error {
+	self.mu.Lock()
+	defer self.mu.Unlock()
+	if self.client == nil {
+		return clientNotOpenErr
+	}
+	return self.client.SetRateLimit(perSecondLimit, wm)
+}
+
 func (self *realCommandClient) Close() error {
 	self.mu.Lock()
 	defer self.mu.Unlock()

@@ -93,6 +93,7 @@ type commandClient interface {
 	GetRules() ([][]byte, error)
 	GetStatus() (*libaudit.AuditStatus, error)
 	SetEnabled(enabled bool, wm libaudit.WaitMode) error
+	SetRateLimit(perSecondLimit uint32, wm libaudit.WaitMode) error
 	Close() error
 }
 
@@ -744,6 +745,11 @@ func (self *auditService) EventsLost(count int) {
 	}
 	self.Log("audit: Detected the loss of %v sequences.", count)
 	self.totalMessagesDroppedCounter.Add(count)
+
+	err := self.commandClient.SetRateLimit(0, libaudit.WaitForReply)
+	if err != nil {
+		self.Log("audit: failed setting rate limit to 0: %s", err)
+	}
 }
 
 func (self *auditService) addRuleToSubsystem(rule *auditrule.WireFormat) error {

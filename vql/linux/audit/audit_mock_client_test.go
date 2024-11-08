@@ -123,6 +123,10 @@ func (self *mockCommandClient) SetEnabled(enabled bool, wm libaudit.WaitMode) er
 	return nil
 }
 
+func (self *mockCommandClient) SetRateLimit(perSecondLimit uint32, wm libaudit.WaitMode) error {
+	return nil
+}
+
 func (self *mockCommandClient) Close() error {
 	self.mu.Lock()
 	defer self.mu.Unlock()
