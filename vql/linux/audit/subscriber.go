@@ -5,6 +5,7 @@ package audit
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"sync"
 
 	auditrule "github.com/elastic/go-libaudit/v2/rule"
@@ -15,6 +16,7 @@ import (
 type AuditRule struct {
 	wfRule auditrule.WireFormat
 	rule   string
+	keys   []string
 }
 
 func parseRule(rule string) (*AuditRule, error) {
@@ -33,9 +35,18 @@ func parseRule(rule string) (*AuditRule, error) {
 		return nil, fmt.Errorf("Failed to normalize rule `%s': %v", rule, err)
 	}
 
+	var keys []string
+	switch v := r.(type) {
+	case *auditrule.SyscallRule:
+		keys = v.Keys
+	case *auditrule.FileWatchRule:
+		keys = v.Keys
+	}
+
 	watcherRule := &AuditRule{
 		wfRule: wfRule,
 		rule:   normalizedRule,
+		keys:   keys,
 	}
 
 	return watcherRule, nil
@@ -82,6 +93,18 @@ func (self *subscriber) addRules(rules []string) error {
 	}
 
 	return nil
+}
+
+func (self *subscriber) wantsEvent(eventTags []string) bool {
+	if len(eventTags) == 0 && len(self.rules) == 0 {
+		return true
+	}
+	for _, rule := range self.rules {
+		if strings.Join(rule.keys, "") == strings.Join(eventTags, "") {
+			return true
+		}
+	}
+	return false
 }
 
 func (self *subscriber) connect() error {

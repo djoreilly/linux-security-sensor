@@ -4,6 +4,7 @@
 package audit
 
 import (
+	"bytes"
 	"context"
 	_ "embed"
 	"encoding/json"
@@ -33,6 +34,7 @@ type TestListener struct {
 	events      [][]byte
 	count       int
 	real_count  int
+	tag_count	int
 	ctx         context.Context
 	cancel      context.CancelFunc
 	opened      bool
@@ -82,6 +84,14 @@ func (self *TestListener) Open(ctx context.Context) error {
 	}
 
 	self.real_count = len(seqs)
+
+	tag_count := 0
+	for _, line := range self.events {
+		if bytes.HasSuffix(line, []byte("key=\"vrr_procmon\"")) {
+			tag_count++
+		}
+	}
+	self.tag_count = tag_count
 
 	self.ctx = newctx
 	self.cancel = cancel
@@ -183,7 +193,8 @@ func (self *AuditServiceTestSuite) TestRunServiceFailListenerOpen() {
 }
 
 func (self *AuditServiceTestSuite) TestSubscribeEvents() {
-	rules := []string{"-a always,exit"}
+	// subscriber gets a rule without a key and another with a key
+	rules := []string{"-a always,exit", "-a always,exit -F arch=b64 -S execve -k vrr_procmon"}
 
 	subscriber, err := self.auditService.Subscribe(rules)
 	assert.NoError(self.T(), err)
@@ -215,6 +226,63 @@ L:
 	assert.Equal(self.T(), len(events), self.listener.real_count)
 
 	goldie.Assert(self.T(), "TestSubscribeEvents", golden)
+}
+
+func (self *AuditServiceTestSuite) TestSubscribeTaggedEvents() {
+	rules := []string{"-a always,exit -F arch=b64 -S execve -k vrr_procmon"}
+	subscriber, err := self.auditService.Subscribe(rules)
+	assert.NoError(self.T(), err, "subscribing to audit service")
+	defer self.auditService.Unsubscribe(subscriber)
+
+	events := []vfilter.Row{}
+	L:
+	for {
+		select {
+		case _, ok := <-subscriber.LogEvents():
+			if !ok {
+				break L
+			}
+		case event, ok := <-subscriber.Events():
+			if !ok {
+				break L
+			}
+
+			events = append(events, event)
+			if len(events) >= self.listener.tag_count {
+				break L
+			}
+		}
+	}
+
+	goldie.AssertJson(self.T(), "TestSubscribeTaggedEvents", events)
+}
+
+func (self *AuditServiceTestSuite) TestSubscribeUntaggedEvents() {
+	rules := []string{}
+	subscriber, err := self.auditService.Subscribe(rules)
+	assert.NoError(self.T(), err, "subscribing to audit service")
+	defer self.auditService.Unsubscribe(subscriber)
+
+	events := []vfilter.Row{}
+	L:
+	for {
+		select {
+		case _, ok := <-subscriber.LogEvents():
+			if !ok {
+				break L
+			}
+		case event, ok := <-subscriber.Events():
+			if !ok {
+				break L
+			}
+			events = append(events, event)
+			if len(events) >= (self.listener.real_count - self.listener.tag_count) {
+				break L
+			}
+		}
+	}
+
+	goldie.AssertJson(self.T(), "TestSubscribeUntaggedEvents", events)
 }
 
 func (self *AuditServiceTestSuite) TestSubscribeEventsListenerWaitFail() {
@@ -249,7 +317,7 @@ L:
 }
 
 func (self *AuditServiceTestSuite) TestMissingRules() {
-	rules := []string{"-a always,exit", "-w /etc/passwd -p rwxa -k passwd"}
+	rules := []string{"-a always,exit", "-a always,exit -F arch=b64 -S execve -k vrr_procmon"}
 
 	subscriber, err := self.auditService.Subscribe(rules)
 	assert.NoError(self.T(), err)

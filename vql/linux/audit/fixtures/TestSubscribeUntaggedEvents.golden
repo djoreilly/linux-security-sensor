@@ -1,0 +1,1417 @@
+[
+  {
+    "@timestamp": "2023-10-11T15:09:30.351Z",
+    "sequence": 62591,
+    "category": "unknown",
+    "record_type": "event_listener",
+    "result": "success",
+    "session": "27",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "0"
+      },
+      "object": {},
+      "how": "/home/jeffm/nl"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "egid": "0",
+        "euid": "0",
+        "fsgid": "0",
+        "fsuid": "0",
+        "gid": "0",
+        "sgid": "0",
+        "suid": "0",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4025",
+      "ppid": "4024",
+      "title": "./nl",
+      "name": "nl",
+      "exe": "/home/jeffm/nl"
+    },
+    "data": {
+      "a0": "3",
+      "a1": "c0000a400c",
+      "a2": "c",
+      "a3": "0",
+      "arch": "x86_64",
+      "auid": "1000",
+      "exit": "0",
+      "nl-mcgrp": "1",
+      "op": "connect",
+      "result": "success",
+      "ses": "27",
+      "socket_family": "netlink",
+      "socket_saddr": "100000000000000001000000",
+      "subj_user": "=unconfined",
+      "syscall": "bind",
+      "tty": "pts1",
+      "uid": "0"
+    },
+    "ecs": {
+      "event": {},
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.071Z",
+    "sequence": 62592,
+    "category": "user-login",
+    "record_type": "user_end",
+    "result": "success",
+    "session": "28",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "1000"
+      },
+      "action": "ended-session",
+      "object": {
+        "type": "user-session",
+        "primary": "/dev/pts/5"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "3930",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "id": "1000",
+      "op": "login",
+      "terminal": "/dev/pts/5"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "session"
+        ],
+        "type": [
+          "end"
+        ]
+      },
+      "user": {
+        "id": "1000",
+        "effective": {
+          "id": "1000"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.071Z",
+    "sequence": 62593,
+    "category": "user-login",
+    "record_type": "user_logout",
+    "result": "success",
+    "session": "28",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "1000"
+      },
+      "action": "logged-out",
+      "object": {
+        "type": "user-session",
+        "primary": "/dev/pts/5"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "3930",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "id": "1000",
+      "op": "login",
+      "terminal": "/dev/pts/5"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "authentication"
+        ],
+        "type": [
+          "end"
+        ]
+      },
+      "user": {
+        "id": "1000",
+        "effective": {
+          "id": "1000"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.071Z",
+    "sequence": 62594,
+    "category": "crypto",
+    "record_type": "crypto_key_user",
+    "result": "success",
+    "session": "28",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "0"
+      },
+      "action": "negotiated-crypto-key",
+      "object": {
+        "type": "user-session",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "suid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "3930",
+      "exe": "/usr/sbin/sshd"
+    },
+    "source": {
+      "ip": "192.168.111.21"
+    },
+    "network": {
+      "direction": "ingress"
+    },
+    "data": {
+      "direction": "both",
+      "kind": "session",
+      "laddr": "192.168.112.223",
+      "lport": "22",
+      "op": "destroy",
+      "rport": "43450",
+      "spid": "3933"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.071Z",
+    "sequence": 62595,
+    "category": "crypto",
+    "record_type": "crypto_key_user",
+    "result": "success",
+    "session": "28",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "0"
+      },
+      "action": "negotiated-crypto-key",
+      "object": {
+        "type": "user-session",
+        "primary": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "suid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "3930",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "fp": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13",
+      "kind": "server",
+      "op": "destroy",
+      "spid": "3933"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.075Z",
+    "sequence": 62596,
+    "category": "user-login",
+    "record_type": "user_end",
+    "result": "success",
+    "session": "28",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "jeffm"
+      },
+      "action": "ended-session",
+      "object": {
+        "type": "user-session",
+        "primary": "ssh",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "3930",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "acct": "jeffm",
+      "addr": "192.168.111.21",
+      "grantors": "pam_loginuid,pam_systemd,pam_limits,pam_unix,pam_umask,pam_env,pam_lastlog,pam_keyinit",
+      "hostname": "192.168.111.21",
+      "op": "PAM:session_close",
+      "terminal": "ssh"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "session"
+        ],
+        "type": [
+          "end"
+        ]
+      },
+      "user": {
+        "id": "1000",
+        "effective": {
+          "name": "jeffm"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.075Z",
+    "sequence": 62597,
+    "category": "user-login",
+    "record_type": "cred_disp",
+    "result": "success",
+    "session": "28",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "jeffm"
+      },
+      "action": "disposed-credentials",
+      "object": {
+        "type": "user-session",
+        "primary": "ssh",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "3930",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "acct": "jeffm",
+      "addr": "192.168.111.21",
+      "grantors": "pam_env,pam_unix",
+      "hostname": "192.168.111.21",
+      "op": "PAM:setcred",
+      "terminal": "ssh"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "authentication"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "id": "1000",
+        "effective": {
+          "name": "jeffm"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.075Z",
+    "sequence": 62598,
+    "category": "crypto",
+    "record_type": "crypto_key_user",
+    "result": "success",
+    "session": "28",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "0"
+      },
+      "action": "negotiated-crypto-key",
+      "object": {
+        "type": "user-session",
+        "primary": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "suid": "0",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "3930",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "fp": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13",
+      "kind": "server",
+      "op": "destroy",
+      "spid": "3930"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.943Z",
+    "sequence": 62600,
+    "category": "crypto",
+    "record_type": "crypto_key_user",
+    "result": "success",
+    "session": "unset",
+    "summary": {
+      "actor": {
+        "primary": "unset",
+        "secondary": "0"
+      },
+      "action": "negotiated-crypto-key",
+      "object": {
+        "type": "user-session",
+        "primary": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "unset",
+        "suid": "0",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4033",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "fp": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13",
+      "kind": "server",
+      "op": "destroy",
+      "spid": "4033"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.943Z",
+    "sequence": 62601,
+    "category": "crypto",
+    "record_type": "crypto_session",
+    "result": "success",
+    "session": "unset",
+    "summary": {
+      "actor": {
+        "primary": "unset",
+        "secondary": "0"
+      },
+      "action": "started-crypto-session",
+      "object": {
+        "type": "user-session",
+        "primary": "192.168.111.21",
+        "secondary": "37166"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "unset",
+        "suid": "489",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "source": {
+      "ip": "192.168.111.21"
+    },
+    "network": {
+      "direction": "ingress"
+    },
+    "data": {
+      "cipher": "chacha20-poly1305@openssh.com",
+      "direction": "from-server",
+      "ksize": "512",
+      "laddr": "192.168.112.223",
+      "lport": "22",
+      "mac": "\u003cimplicit\u003e",
+      "op": "start",
+      "pfs": "curve25519-sha256",
+      "rport": "37166",
+      "spid": "4033"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.943Z",
+    "sequence": 62602,
+    "category": "crypto",
+    "record_type": "crypto_session",
+    "result": "success",
+    "session": "unset",
+    "summary": {
+      "actor": {
+        "primary": "unset",
+        "secondary": "0"
+      },
+      "action": "started-crypto-session",
+      "object": {
+        "type": "user-session",
+        "primary": "192.168.111.21",
+        "secondary": "37166"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "unset",
+        "suid": "489",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "source": {
+      "ip": "192.168.111.21"
+    },
+    "network": {
+      "direction": "ingress"
+    },
+    "data": {
+      "cipher": "chacha20-poly1305@openssh.com",
+      "direction": "from-client",
+      "ksize": "512",
+      "laddr": "192.168.112.223",
+      "lport": "22",
+      "mac": "\u003cimplicit\u003e",
+      "op": "start",
+      "pfs": "curve25519-sha256",
+      "rport": "37166",
+      "spid": "4033"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.991Z",
+    "sequence": 62603,
+    "category": "user-login",
+    "record_type": "user_auth",
+    "result": "success",
+    "session": "unset",
+    "summary": {
+      "actor": {
+        "primary": "unset",
+        "secondary": "jeffm"
+      },
+      "action": "authenticated",
+      "object": {
+        "type": "user-session",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "unset",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "acct": "jeffm",
+      "addr": "192.168.111.21",
+      "grantors": "auth-key",
+      "op": "pubkey_auth"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "authentication"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "id": "unset",
+        "effective": {
+          "name": "jeffm"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.991Z",
+    "sequence": 62604,
+    "category": "crypto",
+    "record_type": "crypto_key_user",
+    "result": "success",
+    "session": "unset",
+    "summary": {
+      "actor": {
+        "primary": "unset",
+        "secondary": "0"
+      },
+      "action": "negotiated-crypto-key",
+      "object": {
+        "type": "user-session",
+        "primary": "SHA256:13:92:ba:a0:3f:8e:3b:ca:90:76:6b:f8:0b:5d:9e:69:f8:ad:9f:06:c2:0f:d9:ca:51:2c:8f:80:8d:5c:8a:9a",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "unset",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "source": {
+      "ip": "192.168.111.21"
+    },
+    "network": {
+      "direction": "ingress"
+    },
+    "data": {
+      "fp": "SHA256:13:92:ba:a0:3f:8e:3b:ca:90:76:6b:f8:0b:5d:9e:69:f8:ad:9f:06:c2:0f:d9:ca:51:2c:8f:80:8d:5c:8a:9a",
+      "kind": "auth-key",
+      "op": "negotiate"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.991Z",
+    "sequence": 62605,
+    "category": "user-login",
+    "record_type": "user_acct",
+    "result": "success",
+    "session": "unset",
+    "summary": {
+      "actor": {
+        "primary": "unset",
+        "secondary": "jeffm"
+      },
+      "action": "was-authorized",
+      "object": {
+        "type": "user-session",
+        "primary": "ssh",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "unset",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "acct": "jeffm",
+      "addr": "192.168.111.21",
+      "grantors": "pam_unix",
+      "hostname": "192.168.111.21",
+      "op": "PAM:accounting",
+      "terminal": "ssh"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "authentication"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "id": "unset",
+        "effective": {
+          "name": "jeffm"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.995Z",
+    "sequence": 62606,
+    "category": "crypto",
+    "record_type": "crypto_key_user",
+    "result": "success",
+    "session": "unset",
+    "summary": {
+      "actor": {
+        "primary": "unset",
+        "secondary": "0"
+      },
+      "action": "negotiated-crypto-key",
+      "object": {
+        "type": "user-session",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "unset",
+        "suid": "489",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "source": {
+      "ip": "192.168.111.21"
+    },
+    "network": {
+      "direction": "ingress"
+    },
+    "data": {
+      "direction": "both",
+      "kind": "session",
+      "laddr": "192.168.112.223",
+      "lport": "22",
+      "op": "destroy",
+      "rport": "37166",
+      "spid": "4033"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.995Z",
+    "sequence": 62607,
+    "category": "user-login",
+    "record_type": "cred_acq",
+    "result": "success",
+    "session": "unset",
+    "summary": {
+      "actor": {
+        "primary": "unset",
+        "secondary": "jeffm"
+      },
+      "action": "acquired-credentials",
+      "object": {
+        "type": "user-session",
+        "primary": "ssh",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "unset",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "acct": "jeffm",
+      "addr": "192.168.111.21",
+      "grantors": "pam_env,pam_unix",
+      "hostname": "192.168.111.21",
+      "op": "PAM:setcred",
+      "terminal": "ssh"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "authentication"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "id": "unset",
+        "effective": {
+          "name": "jeffm"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:33.995Z",
+    "sequence": 62608,
+    "category": "audit-rule",
+    "record_type": "syscall",
+    "result": "success",
+    "session": "30",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "0"
+      },
+      "action": "wrote-to-file",
+      "object": {
+        "type": "file"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "egid": "0",
+        "euid": "0",
+        "fsgid": "0",
+        "fsuid": "0",
+        "gid": "0",
+        "sgid": "0",
+        "suid": "0",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "ppid": "1786",
+      "title": "/usr/sbin/sshd -D -R",
+      "name": "sshd",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "a0": "5",
+      "a1": "7ffe926e7c10",
+      "a2": "4",
+      "a3": "7f91b651a468",
+      "arch": "x86_64",
+      "exit": "4",
+      "syscall": "write",
+      "tty": "(none)"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "file"
+        ],
+        "type": [
+          "change"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:34.007Z",
+    "sequence": 62609,
+    "category": "user-login",
+    "record_type": "user_start",
+    "result": "success",
+    "session": "30",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "jeffm"
+      },
+      "action": "started-session",
+      "object": {
+        "type": "user-session",
+        "primary": "ssh",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "source": {
+      "ip": "192.168.111.21"
+    },
+    "network": {
+      "direction": "ingress"
+    },
+    "data": {
+      "acct": "jeffm",
+      "grantors": "pam_loginuid,pam_systemd,pam_limits,pam_unix,pam_umask,pam_env,pam_lastlog,pam_keyinit",
+      "hostname": "192.168.111.21",
+      "op": "PAM:session_open",
+      "terminal": "ssh"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "session"
+        ],
+        "type": [
+          "start"
+        ]
+      },
+      "user": {
+        "id": "1000",
+        "effective": {
+          "name": "jeffm"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:34.007Z",
+    "sequence": 62610,
+    "category": "crypto",
+    "record_type": "crypto_key_user",
+    "result": "success",
+    "session": "30",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "0"
+      },
+      "action": "negotiated-crypto-key",
+      "object": {
+        "type": "user-session",
+        "primary": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "suid": "0",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4034",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "fp": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13",
+      "kind": "server",
+      "op": "destroy",
+      "spid": "4034"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:34.007Z",
+    "sequence": 62611,
+    "category": "user-login",
+    "record_type": "cred_acq",
+    "result": "success",
+    "session": "30",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "jeffm"
+      },
+      "action": "acquired-credentials",
+      "object": {
+        "type": "user-session",
+        "primary": "ssh",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4034",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "acct": "jeffm",
+      "addr": "192.168.111.21",
+      "grantors": "pam_env,pam_unix",
+      "hostname": "192.168.111.21",
+      "op": "PAM:setcred",
+      "terminal": "ssh"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "authentication"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "id": "1000",
+        "effective": {
+          "name": "jeffm"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:34.019Z",
+    "sequence": 62612,
+    "category": "user-login",
+    "record_type": "user_login",
+    "result": "success",
+    "session": "30",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "1000"
+      },
+      "action": "logged-in",
+      "object": {
+        "type": "user-session",
+        "primary": "/dev/pts/5",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "source": {
+      "ip": "192.168.111.21"
+    },
+    "network": {
+      "direction": "ingress"
+    },
+    "data": {
+      "id": "1000",
+      "op": "login",
+      "terminal": "/dev/pts/5"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "authentication"
+        ],
+        "type": [
+          "start"
+        ]
+      },
+      "user": {
+        "id": "1000",
+        "effective": {
+          "id": "1000"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:34.023Z",
+    "sequence": 62613,
+    "category": "user-login",
+    "record_type": "user_start",
+    "result": "success",
+    "session": "30",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "1000"
+      },
+      "action": "started-session",
+      "object": {
+        "type": "user-session",
+        "primary": "/dev/pts/5",
+        "secondary": "192.168.111.21"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "source": {
+      "ip": "192.168.111.21"
+    },
+    "network": {
+      "direction": "ingress"
+    },
+    "data": {
+      "id": "1000",
+      "op": "login",
+      "terminal": "/dev/pts/5"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "session"
+        ],
+        "type": [
+          "start"
+        ]
+      },
+      "user": {
+        "id": "1000",
+        "effective": {
+          "id": "1000"
+        },
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  },
+  {
+    "@timestamp": "2023-10-11T15:09:34.023Z",
+    "sequence": 62614,
+    "category": "crypto",
+    "record_type": "crypto_key_user",
+    "result": "success",
+    "session": "30",
+    "summary": {
+      "actor": {
+        "primary": "1000",
+        "secondary": "0"
+      },
+      "action": "negotiated-crypto-key",
+      "object": {
+        "type": "user-session",
+        "primary": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13"
+      },
+      "how": "/usr/sbin/sshd"
+    },
+    "user": {
+      "ids": {
+        "auid": "1000",
+        "suid": "1000",
+        "uid": "0"
+      },
+      "selinux": {
+        "user": "=unconfined"
+      }
+    },
+    "process": {
+      "pid": "4032",
+      "exe": "/usr/sbin/sshd"
+    },
+    "data": {
+      "fp": "SHA256:da:6b:ba:da:5d:80:74:99:1a:c9:05:b8:12:6e:48:08:b9:60:51:22:e2:16:3e:a0:6c:c0:59:1a:4b:98:3b:13",
+      "kind": "server",
+      "op": "destroy",
+      "spid": "4035"
+    },
+    "ecs": {
+      "event": {
+        "category": [
+          "process"
+        ],
+        "type": [
+          "info"
+        ]
+      },
+      "user": {
+        "effective": {},
+        "target": {},
+        "changes": {}
+      },
+      "group": {}
+    }
+  }
+]

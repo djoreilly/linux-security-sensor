@@ -116,7 +116,7 @@ type auditService struct {
 	checkerChannel        chan aucoalesce.Event
 	running               bool
 	shuttingDown          bool
-	eventChannel          chan vfilter.Row
+	eventChannel          chan aucoalesce.Event
 	subscribeChannel      chan *subscriber
 	unsubscribeChannel    chan *subscriber
 	shutdownChan          chan struct{}
@@ -272,7 +272,7 @@ func (self *auditService) runService() error {
 	self.logChannel = make(chan string)
 	self.missingRuleLogChannel = make(chan *AuditRule)
 	self.checkerChannel = make(chan aucoalesce.Event)
-	self.eventChannel = make(chan vfilter.Row)
+	self.eventChannel = make(chan aucoalesce.Event)
 	self.subscribeChannel = make(chan *subscriber)
 	self.unsubscribeChannel = make(chan *subscriber)
 	self.shutdownChan = make(chan struct{})
@@ -584,7 +584,9 @@ func (self *auditService) subscriberDistributionLoop() {
 				return
 			}
 			for _, subscriber := range subscribers {
-				subscriber.eventChannel <- event
+				if subscriber.wantsEvent(event.Tags) {
+					subscriber.eventChannel <- event
+				}
 			}
 		case subscriber, _ := <-self.subscribeChannel:
 			subscribers = append(subscribers, subscriber)
